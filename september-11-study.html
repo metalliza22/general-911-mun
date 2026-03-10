@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>September 11, 2001 — A Comprehensive Study</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-card: #161616;
+  --bg-accent: #1a1a1a;
+  --text-primary: #e8e4df;
+  --text-secondary: #9a9590;
+  --text-muted: #5a5652;
+  --accent-red: #c23b22;
+  --accent-red-dim: #8a2a18;
+  --accent-gold: #c4a265;
+  --accent-gold-dim: #8a7245;
+  --border: #252220;
+  --border-light: #333028;
+  --serif: 'Playfair Display', Georgia, serif;
+  --body: 'Source Serif 4', Georgia, serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-gold-dim) var(--bg-primary);
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.85;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent-red);
+  color: #fff;
+}
+
+/* ─── NAV ─── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10,10,10,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  transition: transform 0.3s ease;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.nav-brand {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.nav-brand span { color: var(--accent-red); }
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--accent-gold); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 2rem 6rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(194,59,34,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(196,162,101,0.04) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg-primary) 0%, transparent 40%, transparent 60%, var(--bg-primary) 100%);
+  z-index: 1;
+}
+.hero-bg-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.03;
+  background-image:
+    repeating-linear-gradient(90deg, var(--text-primary) 0, var(--text-primary) 1px, transparent 1px, transparent 120px);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+.hero-date {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.3s ease forwards;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  max-width: 900px;
+  opacity: 0;
+  animation: fadeUp 1s 0.5s ease forwards;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent-gold);
+  font-weight: 400;
+}
+.hero-sub {
+  font-family: var(--body);
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin-top: 2rem;
+  line-height: 1.7;
+  opacity: 0;
+  animation: fadeUp 1s 0.7s ease forwards;
+}
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  opacity: 0;
+  animation: fadeUp 1s 0.9s ease forwards;
+}
+.hero-stat-num {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent-red);
+  line-height: 1;
+}
+.hero-stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 1s 1.2s ease forwards;
+}
+.scroll-indicator span {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--accent-gold), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+/* ─── SECTION STRUCTURE ─── */
+.section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+}
+.section-wide {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 2rem;
+}
+
+/* ─── PART HEADERS ─── */
+.part-header {
+  padding: 8rem 2rem 4rem;
+  text-align: center;
+  position: relative;
+}
+.part-header::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(194,59,34,0.06) 0%, transparent 70%);
+}
+.part-number {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--accent-red);
+  position: relative;
+}
+.part-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-top: 1rem;
+  color: var(--text-primary);
+  position: relative;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─── TYPOGRAPHY ─── */
+h2 {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 4rem 0 1.5rem;
+  color: var(--text-primary);
+}
+h2:first-child { margin-top: 0; }
+
+h3 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 3rem 0 1rem;
+  color: var(--text-primary);
+}
+
+p {
+  margin-bottom: 1.5rem;
+  color: var(--text-secondary);
+}
+
+strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+em {
+  font-style: italic;
+}
+
+/* ─── SPECIAL ELEMENTS ─── */
+.pullquote {
+  margin: 3rem -2rem;
+  padding: 2.5rem 3rem;
+  border-left: 3px solid var(--accent-red);
+  background: linear-gradient(90deg, rgba(194,59,34,0.05), transparent);
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.pullquote .attribution {
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-style: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 1rem;
+}
+
+.stat-block {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+.stat-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.stat-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-red), var(--accent-gold));
+}
+.stat-value {
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent-red);
+  line-height: 1.1;
+}
+.stat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+.timeline-event {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.timeline-time {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-red);
+  padding-top: 0.2rem;
+}
+.timeline-desc {
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.timeline-desc strong {
+  color: var(--text-primary);
+}
+
+.divider {
+  width: 60px;
+  height: 1px;
+  background: var(--accent-gold);
+  margin: 4rem auto;
+}
+
+.info-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  margin: 2rem 0;
+  position: relative;
+}
+.info-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold-dim), transparent);
+}
+.info-card h4 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin-bottom: 1rem;
+}
+
+.toc {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 3rem;
+  margin: 3rem 0;
+}
+.toc h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+  margin: 0 0 1.5rem;
+}
+.toc-list {
+  list-style: none;
+  counter-reset: toc;
+}
+.toc-list li {
+  counter-increment: toc;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.toc-list li:last-child { border-bottom: none; }
+.toc-list a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.toc-list a::before {
+  content: counter(toc, upper-roman);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--accent-red-dim);
+  min-width: 40px;
+}
+.toc-list a:hover { color: var(--accent-gold); }
+
+/* ─── FLIGHT CARDS ─── */
+.flight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0 3rem;
+}
+.flight-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.flight-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--accent-red);
+}
+.flight-card .flight-name {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+.flight-card .flight-detail {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+.flight-card .flight-target {
+  font-family: var(--body);
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  margin-top: 0.75rem;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.footer p {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+}
+.footer .sources {
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-family: var(--body);
+  color: var(--text-muted);
+  margin-top: 1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .hero { padding: 0 1.5rem 4rem; }
+  .hero-stats { flex-direction: column; gap: 1.5rem; }
+  .section, .section-wide { padding: 4rem 1.5rem; }
+  .part-header { padding: 5rem 1.5rem 3rem; }
+  .pullquote { margin: 2rem 0; padding: 1.5rem 2rem; font-size: 1.15rem; }
+  .timeline-event { grid-template-columns: 80px 1fr; gap: 1rem; }
+  .nav-links { display: none; }
+  .flight-grid { grid-template-columns: 1fr; }
+  .stat-block { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  h2 { font-size: 1.5rem; }
+  .stat-block { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">September <span>11</span>, 2001</div>
+    <ul class="nav-links">
+      <li><a href="#origins">Origins</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#intelligence">Intelligence</a></li>
+      <li><a href="#aftermath">Aftermath</a></li>
+      <li><a href="#legacy">Legacy</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-content">
+    <div class="hero-date">Tuesday &middot; September 11, 2001</div>
+    <h1>The Day That <em>Changed</em> Everything</h1>
+    <p class="hero-sub">A comprehensive study of the September 11 attacks — from the origins of al-Qaeda and the eighty-one minutes of horror, to the intelligence failures, the wars that followed, and the world they left behind.</p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">2,977</div>
+        <div class="hero-stat-label">Lives Lost</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">19</div>
+        <div class="hero-stat-label">Hijackers</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">$8T</div>
+        <div class="hero-stat-label">Post-9/11 War Cost</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">81</div>
+        <div class="hero-stat-label">Minutes of Attack</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- TABLE OF CONTENTS -->
+<div class="section reveal">
+  <div class="toc">
+    <h3>Contents</h3>
+    <ol class="toc-list">
+      <li><a href="#origins">The Origins of al-Qaeda & the Road to September 11</a></li>
+      <li><a href="#timeline">Eighty-One Minutes That Changed the World</a></li>
+      <li><a href="#intelligence">The Intelligence Failures That Let It Happen</a></li>
+      <li><a href="#aftermath">The Geopolitical Earthquake — Twenty Years of War</a></li>
+      <li><a href="#domestic">How 9/11 Reshaped American Life</a></li>
+      <li><a href="#legacy">Legacy, Lessons & Unresolved Questions</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PART I ═══════════════════════════════════════ -->
+<div class="part-header reveal" id="origins">
+  <div class="part-number">Part I</div>
+  <h2 class="part-title">The Origins of al-Qaeda & the Road to September 11</h2>
+</div>
+
+<div class="section">
+  <div class="reveal">
+    <h3>Bin Laden's journey from Saudi wealth to global jihad</h3>
+    <p>Osama bin Laden was born in 1957 in Riyadh, the seventeenth of fifty-seven children of Mohammed bin Awad bin Laden, a Saudi construction magnate. At university he fell under the influence of Palestinian Islamist scholar Sheikh Abdullah Azzam. When the Soviet Union invaded Afghanistan in December 1979, the 22-year-old bin Laden traveled to the conflict zone, evolving from financier to combat engineer to field commander.</p>
+    <p>In <strong>August 1988</strong>, as Soviet forces withdrew, bin Laden established al-Qaeda — Arabic for "the Base" — as a permanent apparatus for global jihad. Three grievances animated his ideology: the stationing of American troops in Saudi Arabia after the 1990 Gulf War; U.S. sanctions on Iraq; and American support for Israel's occupation of Palestinian territories.</p>
+    <p>From Sudan (1991–1996) and then Taliban-controlled Afghanistan, bin Laden issued two landmark declarations. The <strong>1996 fatwa</strong> declared war on Americans occupying "the land of the Two Holy Places." The <strong>February 1998 fatwa</strong>, co-signed with Ayman al-Zawahiri, declared that "the ruling to kill the Americans and their allies — civilians and military — is an individual duty for every Muslim."</p>
+  </div>
+
+  <div class="reveal">
+    <h3>The escalating pattern of prior attacks</h3>
+    <div class="timeline-event">
+      <div class="timeline-time">Feb 1993</div>
+      <div class="timeline-desc"><strong>World Trade Center bombing.</strong> A 1,200-pound bomb in the underground garage kills 6 and injures over 1,000. The intent was to topple the North Tower into the South.</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">Aug 1998</div>
+      <div class="timeline-desc"><strong>U.S. Embassy bombings.</strong> Near-simultaneous truck bombs in Nairobi and Dar es Salaam kill 224 people and wound approximately 5,000.</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">Oct 2000</div>
+      <div class="timeline-desc"><strong>USS Cole attack.</strong> A suicide boat in Aden, Yemen tears a 40×60-foot hole in the destroyer, killing 17 sailors.</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <h3>Khalid Sheikh Mohammed & the planes operation</h3>
+    <p>The operational architect was <strong>Khalid Sheikh Mohammed (KSM)</strong>, uncle of the 1993 WTC bomber Ramzi Yousef. In mid-1996, KSM pitched bin Laden on crashing hijacked planes into American targets. His original vision involved ten aircraft. It was scaled to four, targeting the World Trade Center, Pentagon, U.S. Capitol, and White House.</p>
+  </div>
+
+  <div class="reveal">
+    <h3>The Hamburg cell</h3>
+    <p><strong>Mohamed Atta</strong> (Egypt), <strong>Marwan al-Shehhi</strong> (UAE), <strong>Ziad Jarrah</strong> (Lebanon), and <strong>Ramzi bin al-Shibh</strong> (Yemen) formed the operational core in Hamburg, Germany. They traveled to Afghanistan in 1999, swore loyalty to bin Laden, and were briefed on the plot. Bin Laden personally selected Atta as the overall leader. Fifteen additional "muscle hijackers" — fourteen Saudis and one Emirati — were recruited to control passengers.</p>
+  </div>
+
+  <div class="reveal">
+    <h3>Flight training in America</h3>
+    <p>Atta and al-Shehhi enrolled at Huffman Aviation in Venice, Florida. Jarrah trained at the Florida Flight Training Center. Hani Hanjour, who already held a U.S. commercial pilot's license, trained in Arizona. They lived openly — renting apartments, opening bank accounts, obtaining driver's licenses — all under their real names.</p>
+    
+    <div class="info-card">
+      <h4>Cost of the Plot</h4>
+      <p style="margin-bottom:0;">The 9/11 Commission estimated the total operational cost at <strong>$400,000–$500,000</strong>. In the days before the attack, the hijackers wired $18,260 in excess funds back to facilitators — they knew they would not need money again.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PART II ═══════════════════════════════════════ -->
+<div class="part-header reveal" id="timeline">
+  <div class="part-number">Part II</div>
+  <h2 class="part-title">Eighty-One Minutes That Changed the World</h2>
+</div>
+
+<div class="section">
+  <div class="reveal">
+    <h3>The four hijacked flights</h3>
+    <div class="flight-grid">
+      <div class="flight-card">
+        <div class="flight-name">American Airlines Flight 11</div>
+        <div class="flight-detail">Boeing 767 &middot; Boston → Los Angeles</div>
+        <div class="flight-detail">92 aboard &middot; 5 hijackers &middot; Led by Atta</div>
+        <div class="flight-target">→ North Tower, WTC &middot; 8:46 AM</div>
+      </div>
+      <div class="flight-card">
+        <div class="flight-name">United Airlines Flight 175</div>
+        <div class="flight-detail">Boeing 767 &middot; Boston → Los Angeles</div>
+        <div class="flight-detail">65 aboard &middot; 5 hijackers &middot; Led by al-Shehhi</div>
+        <div class="flight-target">→ South Tower, WTC &middot; 9:03 AM</div>
+      </div>
+      <div class="flight-card">
+        <div class="flight-name">American Airlines Flight 77</div>
+        <div class="flight-detail">Boeing 757 &middot; Dulles → Los Angeles</div>
+        <div class="flight-detail">64 aboard &middot; 5 hijackers &middot; Led by Hanjour</div>
+        <div class="flight-target">→ The Pentagon &middot; 9:37 AM</div>
+      </div>
+      <div class="flight-card">
+        <div class="flight-name">United Airlines Flight 93</div>
+        <div class="flight-detail">Boeing 757 &middot; Newark → San Francisco</div>
+        <div class="flight-detail">44 aboard &middot; 4 hijackers &middot; Led by Jarrah</div>
+        <div class="flight-target">→ Crashed Shanksville, PA &middot; 10:03 AM</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <h3>Minute-by-minute</h3>
+    <div class="timeline-event">
+      <div class="timeline-time">8:14 AM</div>
+      <div class="timeline-desc"><strong>Flight 11 hijacked.</strong> Flight attendant Betty Ong calls reservations: "The cockpit is not answering their phone, and there's somebody stabbed in business class."</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">8:24 AM</div>
+      <div class="timeline-desc">ATC receives Atta's accidental radio transmission: <strong>"We have some planes. Just stay quiet, and you'll be okay."</strong></div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">8:46 AM</div>
+      <div class="timeline-desc"><strong>Flight 11 strikes the North Tower</strong> between floors 93 and 99 at ~465 mph. All three stairwells are severed. Approximately 1,355 people are trapped above the impact zone. None survive.</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">9:03 AM</div>
+      <div class="timeline-desc"><strong>Flight 175 strikes the South Tower</strong> between floors 77 and 85 at ~540 mph — broadcast live worldwide. Stairwell A narrowly survives; 18 people escape from above the impact.</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">9:37 AM</div>
+      <div class="timeline-desc"><strong>Flight 77 crashes into the Pentagon</strong> at 530 mph, penetrating three of five rings. 125 Pentagon personnel killed alongside all 64 aboard.</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">9:42 AM</div>
+      <div class="timeline-desc"><strong>FAA orders all U.S. airspace closed</strong> — first time in history. Approximately 4,500 aircraft grounded within 2.5 hours.</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">9:57 AM</div>
+      <div class="timeline-desc"><strong>Flight 93 passengers revolt.</strong> Todd Beamer's words to GTE operator: "Are you guys ready? Okay. Let's roll."</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">9:59 AM</div>
+      <div class="timeline-desc"><strong>South Tower collapses</strong> — 56 minutes after impact. The lower impact point meant 30 floors (54,000 tons) pressed on the weakened zone.</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">10:03 AM</div>
+      <div class="timeline-desc"><strong>Flight 93 crashes</strong> near Shanksville, PA at 563 mph, ~20 minutes from Washington. Probable target: the U.S. Capitol.</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">10:28 AM</div>
+      <div class="timeline-desc"><strong>North Tower collapses</strong> after burning for 102 minutes.</div>
+    </div>
+    <div class="timeline-event">
+      <div class="timeline-time">5:20 PM</div>
+      <div class="timeline-desc"><strong>7 World Trade Center collapses</strong> after uncontrolled fires — the first tall building to collapse primarily due to fire.</div>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <h3>Why the towers fell</h3>
+    <p>NIST's definitive investigation found that jet fuel fires weakened but did not melt the structural steel. Steel loses ~50% of its strength at 600°C; jet fuel burns at 800–1,000°C. The aircraft impacts dislodged spray-on fireproofing, exposing bare steel. As floor trusses heated and sagged, they pulled perimeter columns inward. Once the exterior columns buckled, gravitational energy overwhelmed each successive floor in a progressive collapse.</p>
+  </div>
+
+  <div class="reveal">
+    <h3>The human toll</h3>
+    <div class="stat-block">
+      <div class="stat-item">
+        <div class="stat-value">2,977</div>
+        <div class="stat-label">Total killed</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">343</div>
+        <div class="stat-label">FDNY firefighters</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">60+</div>
+        <div class="stat-label">Law enforcement officers</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">90+</div>
+        <div class="stat-label">Nations represented</div>
+      </div>
+    </div>
+    <p>An estimated 200 people fell or jumped from the burning towers. Over 1,100 victims have never had any remains identified. The largest maritime evacuation in history moved over <strong>500,000 people</strong> by water in nine hours — surpassing the 1940 Dunkirk evacuation.</p>
+  </div>
+
+  <div class="reveal">
+    <div class="pullquote">
+      "I can hear you! The rest of the world hears you! And the people who knocked these buildings down will hear all of us soon!"
+      <span class="attribution">President George W. Bush, Ground Zero, September 14, 2001</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PART III ═══════════════════════════════════════ -->
+<div class="part-header reveal" id="intelligence">
+  <div class="part-number">Part III</div>
+  <h2 class="part-title">The Intelligence Failures That Let It Happen</h2>
+</div>
+
+<div class="section">
+  <div class="reveal">
+    <h3>A summer of blinking red lights</h3>
+    <p>CIA Director George Tenet told the 9/11 Commission that during the summer of 2001, <strong>"the system was blinking red."</strong> Yet a cascade of warnings never coalesced into action.</p>
+
+    <div class="info-card">
+      <h4>The Phoenix Memo — July 10, 2001</h4>
+      <p style="margin-bottom:0;">FBI Agent Kenneth Williams in Phoenix warned of a possible effort by bin Laden to send students to U.S. flight schools. The memo reached the Radical Fundamentalist Unit but never made it to senior FBI leadership.</p>
+    </div>
+
+    <div class="info-card">
+      <h4>The Moussaoui Case — August 16, 2001</h4>
+      <p style="margin-bottom:0;">The FBI arrested Zacarias Moussaoui in Minnesota after suspicious behavior at a flight school. Agent Harry Samit sent ~70 warning messages. When Minnesota raised concerns about "flying a plane into the World Trade Center," headquarters replied: <strong>"That's not going to happen."</strong></p>
+    </div>
+
+    <div class="info-card">
+      <h4>The August 6 PDB</h4>
+      <p style="margin-bottom:0;">President Bush received a Presidential Daily Brief titled <strong>"Bin Ladin Determined To Strike in US."</strong> It referenced 1998 reports about hijacking aircraft and noted ~70 ongoing FBI investigations. No urgent action followed.</p>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <h3>Losing track of two hijackers</h3>
+    <p>In January 2000, the CIA monitored an al-Qaeda summit in Kuala Lumpur and identified <strong>Khalid al-Mihdhar</strong> and <strong>Nawaf al-Hazmi</strong>, discovering al-Mihdhar held a multiple-entry U.S. visa. Yet the CIA failed to place either man on the State Department watchlist and failed to notify the FBI.</p>
+    <p>Ten days later, both men flew into LAX under their real names. In San Diego, al-Hazmi was listed in the phone book. They moved into the home of a <strong>paid FBI informant</strong> — who was never tasked to monitor them. The CIA did not alert the FBI until <strong>August 23, 2001</strong> — twenty months later, and just nineteen days before the attacks.</p>
+  </div>
+
+  <div class="reveal">
+    <div class="pullquote">
+      "Someday someone will die and, wall or not, the public will not understand why we were not more effective."
+      <span class="attribution">FBI Agent's email, weeks before September 11</span>
+    </div>
+  </div>
+
+  <div class="reveal">
+    <h3>The 9/11 Commission: "A failure of imagination"</h3>
+    <p>Established November 27, 2002, chaired by Thomas Kean and Lee Hamilton, the commission interviewed over 1,200 people and reviewed 2.5 million pages of documents. Its central finding: the attacks reflected a <strong>"failure of imagination"</strong> — the inability to conceive of the scale and nature of the threat. The 585-page report, published July 22, 2004, became a national bestseller.</p>
+    <p>Key recommendations led to the creation of the Director of National Intelligence and the National Counterterrorism Center. The controversial <strong>"28 pages"</strong> on Saudi involvement were classified until 2016, revealing contacts between hijackers and individuals connected to the Saudi government. Litigation by 9/11 families against Saudi Arabia continues.</p>
+  </div>
+
+  <div class="reveal">
+    <div class="pullquote">
+      "Your government failed you. Those entrusted with protecting you failed you. And I failed you."
+      <span class="attribution">Richard Clarke, testimony before the 9/11 Commission, March 24, 2004</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PART IV ═══════════════════════════════════════ -->
+<div class="part-header reveal" id="aftermath">
+  <div class="part-number">Part IV</div>
+  <h2 class="part-title">The Geopolitical Earthquake — Twenty Years of War</h2>
+</div>
+
+<div class="section">
+  <div class="reveal">
+    <h3>Afghanistan: swift victory, slow defeat</h3>
+    <p>The war began covertly on September 26, 2001, when CIA team <strong>"Jawbreaker"</strong> arrived with suitcases of cash. Kabul fell November 13, Kandahar December 6. But at Tora Bora, bin Laden escaped into Pakistan when requests for 800 Army Rangers to block escape routes were denied. The Taliban regrouped, launching a sustained insurgency. By withdrawal, the war had claimed 2,456 U.S. service members and an estimated 47,000+ Afghan civilians at a cost of ~$2.26 trillion.</p>
+  </div>
+
+  <div class="reveal">
+    <h3>Iraq: the war built on false premises</h3>
+    <p>Despite no credible evidence linking Saddam Hussein to 9/11, the Bush administration built a case for war. Colin Powell's February 2003 UN presentation — which he later called "a blot" on his record — cited weapons that never existed. Baghdad fell in three weeks. Then Paul Bremer dissolved the Iraqi army, putting <strong>400,000 armed men</strong> on the street — fueling the insurgency and, ultimately, the rise of ISIS.</p>
+  </div>
+
+  <div class="reveal">
+    <h3>The hunt that ended in Abbottabad</h3>
+    <p>On <strong>May 2, 2011</strong>, 23 members of SEAL Team Six raided a compound in Abbottabad, Pakistan. Bin Laden was killed after a 38-minute operation. A SEAL radioed: <strong>"Geronimo E.K.I.A."</strong></p>
+  </div>
+
+  <div class="reveal">
+    <h3>The surveillance state</h3>
+    <p>The USA PATRIOT Act expanded surveillance powers. Bush secretly authorized the NSA's STELLAR WIND program. In 2013, Edward Snowden revealed mass surveillance programs including PRISM. Guantánamo Bay held ~780 detainees. The 2014 Senate torture report concluded CIA techniques "were brutal and far worse than the CIA represented."</p>
+  </div>
+
+  <div class="reveal">
+    <h3>The fall of Kabul — August 15, 2021</h3>
+    <p>The Taliban entered Kabul. President Ghani fled. Images of Afghans clinging to departing aircraft circled the globe. On August 26, an ISIS-K bombing killed 13 U.S. service members and 170+ Afghan civilians. America's longest war ended on August 30, 2021.</p>
+  </div>
+
+  <div class="reveal">
+    <h3>The staggering cost</h3>
+    <div class="stat-block">
+      <div class="stat-item">
+        <div class="stat-value">~$8T</div>
+        <div class="stat-label">Total financial cost</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">~940K</div>
+        <div class="stat-label">Direct deaths</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">38M</div>
+        <div class="stat-label">People displaced</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">30,177</div>
+        <div class="stat-label">Veteran suicides (4× combat deaths)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PART V ═══════════════════════════════════════ -->
+<div class="part-header reveal" id="domestic">
+  <div class="part-number">Part V</div>
+  <h2 class="part-title">How 9/11 Reshaped American Life</h2>
+</div>
+
+<div class="section">
+  <div class="reveal">
+    <h3>The surge of Islamophobia</h3>
+    <p>Anti-Muslim hate crimes surged from 28 in 2000 to <strong>481 in 2001</strong> — a 1,600% increase. They never returned to pre-9/11 levels. The first fatal hate crime came September 15: <strong>Balbir Singh Sodhi</strong>, a Sikh American gas station owner in Mesa, Arizona, was murdered by a man who declared he was "going to go out and shoot some towel-heads."</p>
+  </div>
+
+  <div class="reveal">
+    <h3>The toxic legacy: first responders still dying</h3>
+    <p>The WTC collapse released asbestos, heavy metals, PCBs, and dioxins. The EPA declared the air "safe to breathe" — a claim later found to be without sufficient data. Over <strong>137,000</strong> responders and survivors are enrolled in the WTC Health Program. Nearly <strong>50,000</strong> have been certified with a 9/11-related cancer. The Zadroga Act, championed by Jon Stewart, made the Victim Compensation Fund permanent through 2090.</p>
+  </div>
+
+  <div class="reveal">
+    <h3>Memorials: carved in water, light, and wind</h3>
+    <p>The National September 11 Memorial features twin reflecting pools set within the tower footprints — water descending 30 feet into a central void that can never be filled. The Pentagon Memorial holds 184 illuminated benches arranged by age. The Flight 93 Memorial includes a 93-foot Tower of Voices with 40 wind chimes. Each September 11, the Tribute in Light sends beams four miles into the sky. One World Trade Center rises to a symbolic <strong>1,776 feet</strong>.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ PART VI ═══════════════════════════════════════ -->
+<div class="part-header reveal" id="legacy">
+  <div class="part-number">Part VI</div>
+  <h2 class="part-title">Legacy, Lessons & Unresolved Questions</h2>
+</div>
+
+<div class="section">
+  <div class="reveal">
+    <p>No large-scale attack comparable to 9/11 has occurred on U.S. soil since. Al-Qaeda's capacity was severely degraded. But the costs were staggering and arguably counterproductive. The wars destabilized entire regions, creating conditions for ISIS. Abu Ghraib and the torture program devastated American moral authority. The surveillance state normalized intrusive monitoring. The Taliban's 2021 return to power negated twenty years of effort.</p>
+
+    <div class="divider"></div>
+
+    <p>The attacks exposed a paradox at the heart of open societies: the very freedoms that make them worth defending also make them vulnerable. The most effective defense on September 11 itself was not institutional — it was the passengers of Flight 93, ordinary civilians who processed information, made a collective decision, and acted with extraordinary courage.</p>
+
+    <p>The 9/11 Commission's phrase "failure of imagination" applies not only to the inability to anticipate the attacks but to the subsequent inability to imagine a proportionate response. A $400,000 plot provoked an $8 trillion reaction. The lesson most often cited — and most often ignored — is that the greatest dangers come not from the attack itself, but from the fear-driven overreaction that follows.</p>
+  </div>
+
+  <div class="reveal">
+    <div class="pullquote">
+      Twenty-five years later, the challenge remains the same: how to defend an open society without becoming a closed one.
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>A comprehensive study compiled from public sources</p>
+  <div class="sources">Sources include the 9/11 Commission Report, NIST WTC investigations, Brown University Costs of War Project, the National September 11 Memorial & Museum, Britannica, and reporting from PBS, NPR, the New York Times, and the Washington Post.</div>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Smooth scroll for nav links
+document.querySelectorAll('.nav-links a, .toc-list a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
